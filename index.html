@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Estás Invitado!</title>
+    <title>¡Estás Invitado a mi Cumpleaños!</title>
     <style>
         * {
             margin: 0;
@@ -22,11 +22,136 @@
             position: relative;
         }
 
+        /* Pantalla de cuenta regresiva */
+        #countdown-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease;
+        }
+
+        #countdown-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .countdown-title {
+            font-size: 3em;
+            color: #fff;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            animation: glow 2s ease-in-out infinite;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+            50% { text-shadow: 0 0 40px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 255, 255, 0.6); }
+        }
+
+        #countdown-number {
+            font-size: 15em;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+            animation: countScale 1s ease-in-out infinite;
+        }
+
+        @keyframes countScale {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .start-button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 25px 60px;
+            font-size: 2em;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 40px rgba(245, 87, 108, 0.5);
+            transition: all 0.3s ease;
+            font-weight: bold;
+            animation: pulse 1.5s ease-in-out infinite;
+            margin-top: 50px;
+        }
+
+        .start-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 50px rgba(245, 87, 108, 0.7);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .music-note {
+            position: absolute;
+            font-size: 3em;
+            animation: float-music 3s ease-in-out infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes float-music {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg) scale(1); 
+                opacity: 0.6;
+            }
+            50% { 
+                transform: translateY(-30px) rotate(10deg) scale(1.2); 
+                opacity: 1;
+            }
+        }
+
+        .star {
+            position: absolute;
+            font-size: 2em;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.5); }
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 10px;
+            height: 15px;
+            animation: fall-confetti 4s linear infinite;
+        }
+
+        @keyframes fall-confetti {
+            to {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Contenido principal */
+        #main-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         .balloon {
             position: absolute;
             bottom: -100px;
             width: 50px;
-
             height: 70px;
             border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
             animation: float 8s ease-in infinite;
@@ -57,7 +182,6 @@
             0% {
                 transform: translateY(0) translateX(0) rotate(0deg);
                 opacity: 1;
-
             }
             100% {
                 transform: translateY(-120vh) translateX(var(--drift)) rotate(360deg);
@@ -87,14 +211,15 @@
         .container {
             background: rgba(255, 255, 255, 0.98);
             border-radius: 30px;
-
             padding: 40px;
-            max-width: 600px;
+            max-width: 650px;
             width: 90%;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
             animation: bounceIn 1s ease-out;
             position: relative;
             z-index: 10;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         @keyframes bounceIn {
@@ -118,38 +243,93 @@
 
         .emoji {
             font-size: 80px;
-
             animation: spin 2s ease-in-out infinite;
             display: inline-block;
         }
 
         @keyframes spin {
-            0%, 100% { transform: rotate(-10deg); }
-            50% { transform: rotate(10deg); }
+            0%, 100% { transform: rotate(-10deg) scale(1); }
+            50% { transform: rotate(10deg) scale(1.1); }
         }
 
         h1 {
             color: #7e22ce;
-            font-size: 2.5em;
+            font-size: 2.3em;
             margin: 20px 0;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .question-box {
+        .funny-text {
+            font-size: 1.2em;
+            color: #666;
+            margin: 15px 0;
+            font-style: italic;
+            line-height: 1.5;
+        }
+
+        .photo-section {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+
+        .photo-frame {
+            width: 250px;
+            height: 250px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 5px solid #f093fb;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: photoFloat 3s ease-in-out infinite;
+            position: relative;
+            transform: rotate(-8deg);
+        }
+
+        @keyframes photoFloat {
+            0%, 100% { transform: translateY(0) rotate(-8deg); }
+            50% { transform: translateY(-15px) rotate(-8deg); }
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(240, 147, 251, 0.95);
+            color: white;
+            padding: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .info-box {
             margin: 25px 0;
             opacity: 0;
             animation: slideIn 0.6s ease-out forwards;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .question-box:nth-child(1) { animation-delay: 0.2s; }
-        .question-box:nth-child(2) { animation-delay: 0.4s; }
-        .question-box:nth-child(3) { animation-delay: 0.6s; }
+        .info-box:nth-child(1) { animation-delay: 0.2s; }
+        .info-box:nth-child(2) { animation-delay: 0.4s; }
+        .info-box:nth-child(3) { animation-delay: 0.6s; }
 
         @keyframes slideIn {
             from {
                 opacity: 0;
                 transform: translateX(-50px);
-
             }
             to {
                 opacity: 1;
@@ -157,75 +337,26 @@
             }
         }
 
-        .question-btn {
-            width: 100%;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            border: none;
-            padding: 20px;
+        .question {
             font-size: 1.5em;
+            color: #7e22ce;
             font-weight: bold;
-            border-radius: 20px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            margin-bottom: 15px;
+            text-align: center;
         }
 
-        .question-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .question-btn:active {
-
-            transform: scale(0.98);
-        }
-
-        .question-btn::before {
-            content: '👆';
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.2em;
-            animation: point 0.8s ease-in-out infinite;
-        }
-
-        @keyframes point {
-            0%, 100% { transform: translateY(-50%) translateX(0); }
-            50% { transform: translateY(-50%) translateX(-5px); }
-        }
-
-        .answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease, padding 0.5s ease, margin 0.5s ease;
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        .answer-static {
+            background: white;
             border-radius: 15px;
-            margin-top: 0;
-            padding: 0 20px;
-        }
-
-        .answer.show {
-            max-height: 200px;
             padding: 20px;
-            margin-top: 15px;
-            animation: wiggle 0.5s ease;
-        }
-
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-2deg); }
-            75% { transform: rotate(2deg); }
         }
 
         .answer-text {
-            font-size: 1.8em;
+            font-size: 1.6em;
             color: #333;
             font-weight: bold;
             text-align: center;
+            line-height: 1.5;
         }
 
         .final-section {
@@ -238,7 +369,6 @@
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-
                 transform: translateY(30px);
             }
             to {
@@ -258,28 +388,28 @@
             box-shadow: 0 10px 30px rgba(17, 153, 142, 0.4);
             transition: all 0.3s ease;
             font-weight: bold;
-            animation: pulse 2s ease-in-out infinite;
+            animation: buttonPulse 2s ease-in-out infinite;
         }
 
-        @keyframes pulse {
+        @keyframes buttonPulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
         }
 
         .confirm-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-
+            transform: translateY(-5px) scale(1.08);
             box-shadow: 0 15px 40px rgba(17, 153, 142, 0.6);
         }
 
         .celebration {
             display: none;
             text-align: center;
-            font-size: 2.5em;
+            font-size: 2.3em;
             color: #7e22ce;
             margin-top: 20px;
             animation: bounce 0.6s ease-in-out;
             font-weight: bold;
+            line-height: 1.4;
         }
 
         @keyframes bounce {
@@ -289,72 +419,240 @@
         }
 
         @media (max-width: 600px) {
+            .countdown-title {
+                font-size: 1.8em;
+                padding: 0 10px;
+            }
+            #countdown-number {
+                font-size: 8em;
+            }
+            .start-button {
+                font-size: 1.5em;
+                padding: 20px 40px;
+            }
+            .photo-frame {
+                width: 200px;
+                height: 200px;
+            }
             .container {
                 padding: 25px;
             }
             h1 {
-                font-size: 2em;
+                font-size: 1.8em;
             }
-            .question-btn {
+            .funny-text {
+                font-size: 1em;
+            }
+            .question {
                 font-size: 1.2em;
-                padding: 15px;
             }
-
             .answer-text {
-                font-size: 1.4em;
+                font-size: 1.3em;
+            }
+            .confirm-btn {
+                font-size: 1.2em;
+                padding: 15px 40px;
+            }
+            .celebration {
+                font-size: 1.8em;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="emoji">🎊</div>
-            <h1>¡Te invito a mi FIESTÓN!</h1>
-        </div>
+    <!-- Pantalla de cuenta regresiva -->
+    <div id="countdown-screen">
+        <div class="music-note" style="top: 10%; left: 20%;">🎵</div>
+        <div class="music-note" style="top: 20%; right: 15%; animation-delay: 0.5s;">🎶</div>
+        <div class="music-note" style="bottom: 15%; left: 10%; animation-delay: 1s;">🎵</div>
+        <div class="music-note" style="bottom: 25%; right: 25%; animation-delay: 1.5s;">🎶</div>
+        <div class="music-note" style="top: 40%; left: 5%; animation-delay: 0.8s;">🎵</div>
+        <div class="music-note" style="top: 60%; right: 10%; animation-delay: 1.2s;">🎶</div>
+        
+        <div class="star" style="top: 5%; left: 30%; animation-delay: 0s;">⭐</div>
+        <div class="star" style="top: 15%; right: 20%; animation-delay: 0.3s;">✨</div>
+        <div class="star" style="bottom: 10%; left: 25%; animation-delay: 0.6s;">⭐</div>
+        <div class="star" style="bottom: 30%; right: 30%; animation-delay: 0.9s;">✨</div>
+        <div class="star" style="top: 50%; left: 15%; animation-delay: 1.2s;">⭐</div>
+        <div class="star" style="top: 70%; right: 40%; animation-delay: 1.5s;">✨</div>
+        
+        <h2 class="countdown-title">🎂 ¡Prepárate para el cumpleaños! 🎂</h2>
+        <div id="countdown-number">3</div>
+        <button class="start-button" onclick="startCountdown()">¡Abrir Invitación! 🎁</button>
+    </div>
 
-        <div class="question-box">
-            <button class="question-btn" onclick="toggleAnswer(1)">
-                ¿Cuándo es la cosa?
-            </button>
-            <div class="answer" id="answer1">
-                <div class="answer-text">¡El 11 de diciembre! 📅<br>¡Márcalo con rojo! 🔴</div>
+    <!-- Audio -->
+    <audio id="party-music" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_4ea3f2173d.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Contenido principal de la invitación -->
+    <div id="main-content" style="display: none;">
+        <div class="container">
+            <div class="header">
+                <div class="emoji">🎊</div>
+                <h1>¡Te invito a mi CUMPLEAÑOS! 🎂🎈</h1>
+                <p class="funny-text">¡Y TÚ estás invitado a mi cumpleaños! 🥳🎉</p>
             </div>
-        </div>
 
-        <div class="question-box">
-            <button class="question-btn" onclick="toggleAnswer(2)">
-                ¿A qué hora llego?
-            </button>
-            <div class="answer" id="answer2">
-
-                <div class="answer-text">¡Todo el día, bebé! 🌅🌞🌙<br>¡Desde que amanece hasta que se acaba! 🎉</div>
+            <div class="photo-section">
+                <div class="photo-frame">
+                    <img src="https://i.ibb.co/KzybTJ8/foto-bebe.jpg" alt="Yo de bebé">
+                    <div class="photo-label">Yo antes 👶🎅</div>
+                </div>
             </div>
-        </div>
 
-        <div class="question-box">
-            <button class="question-btn" onclick="toggleAnswer(3)">
-                ¿Y dónde rayos es?
-            </button>
-            <div class="answer" id="answer3">
-                <div class="answer-text">Av. Coronel 7717 📍<br>¡No te pierdas que empieza sin ti! 😜</div>
+            <div class="info-box">
+                <div class="question">¿Cuándo es la cosa? 📅</div>
+                <div class="answer-static">
+                    <div class="answer-text">¡El 11 de diciembre! 📅<br>¡Márcalo con rojo! 🔴</div>
+                </div>
             </div>
-        </div>
 
-        <div class="final-section">
-            <button class="confirm-btn" onclick="confirmAttendance()">
-                ¡Ahí estaré! 🎈
-            </button>
-            <div class="celebration" id="celebration">
-                ¡SIUUUU! 🎉🎊🎁<br>¡Te espero con ansias! 💃🕺
+            <div class="info-box">
+                <div class="question">¿A qué hora llego? ⏰</div>
+                <div class="answer-static">
+                    <div class="answer-text">¡TODO EL DÍA, compadre! 🌅🌞🌙<br>¡Desde que salga el sol hasta que ya no aguantes más! 🎉</div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <div class="question">¿Y dónde rayos es? 📍</div>
+                <div class="answer-static">
+                    <div class="answer-text">Av. Coronel 7717 📍<br>¡No te pierdas que empieza sin ti! 😜<br>(Y sí, habrá comida gratis... ¿necesitas más razones?) 🍕🍔🎂</div>
+                </div>
+            </div>
+
+            <div class="final-section">
+                <button class="confirm-btn" onclick="confirmAttendance()">
+                    ¡Ahí estaré! 🎈
+                </button>
+                <div class="celebration" id="celebration">
+                    ¡SIUUUUU! 🎉🎊🎁<br>¡Te espero con muchas ansias!<br>¡Nos vemos en mi cumpleaños! 💃🕺🎉
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Crear globos flotantes
-        function createBalloon() {
+        let countdownStarted = false;
+        const music = document.getElementById('party-music');
 
+        // Iniciar cuenta regresiva
+        function startCountdown() {
+            if (countdownStarted) return;
+            countdownStarted = true;
+
+            music.play().catch(e => console.log('Auto-play bloqueado'));
+
+            const countdownNum = document.getElementById('countdown-number');
+            const screen = document.getElementById('countdown-screen');
+            let count = 3;
+
+            const confettiInterval = setInterval(createConfettiPiece, 150);
+            const countInterval = setInterval(() => {
+                createMassiveFireworks();
+            }, 200);
+
+            const interval = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    countdownNum.textContent = count;
+                    createMassiveFireworks();
+                    countdownNum.style.animation = 'none';
+                    setTimeout(() => {
+                        countdownNum.style.animation = 'countScale 1s ease-in-out infinite';
+                    }, 10);
+                } else {
+                    countdownNum.textContent = '¡CUMPLE!';
+                    countdownNum.style.fontSize = '7em';
+                    countdownNum.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+                    countdownNum.style.webkitBackgroundClip = 'text';
+                    countdownNum.style.webkitTextFillColor = 'transparent';
+                    countdownNum.style.backgroundClip = 'text';
+                    
+                    for (let i = 0; i < 30; i++) {
+                        setTimeout(() => {
+                            const x = Math.random() * window.innerWidth;
+                            const y = Math.random() * window.innerHeight;
+                            createCountdownFirework(x, y);
+                        }, i * 50);
+                    }
+                    
+                    setTimeout(() => {
+                        screen.classList.add('hidden');
+                        document.getElementById('main-content').style.display = 'flex';
+                        clearInterval(interval);
+                        clearInterval(countInterval);
+                        clearInterval(confettiInterval);
+                        startMainAnimations();
+                    }, 2000);
+                }
+            }, 1000);
+        }
+
+        // Crear confeti cayendo
+        function createConfettiPiece() {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7', '#ff85a2', '#feca57'];
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti-piece';
+            confetti.style.left = Math.random() * 100 + '%';
+            confetti.style.top = '-20px';
+            confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            document.getElementById('countdown-screen').appendChild(confetti);
+            
+            setTimeout(() => confetti.remove(), 6000);
+        }
+
+        // Fuegos artificiales masivos
+        function createMassiveFireworks() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const x = Math.random() * window.innerWidth;
+                    const y = Math.random() * window.innerHeight;
+                    createCountdownFirework(x, y);
+                }, i * 100);
+            }
+        }
+
+        // Crear fuegos artificiales en countdown
+        function createCountdownFirework(x, y) {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7', '#ff85a2'];
+            const particleCount = 25;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'firework';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                const angle = (Math.PI * 2 * i) / particleCount;
+                const velocity = 50 + Math.random() * 50;
+                const xVel = Math.cos(angle) * velocity;
+                const yVel = Math.sin(angle) * velocity;
+                
+                particle.style.setProperty('--x', xVel + 'px');
+                particle.style.setProperty('--y', yVel + 'px');
+                
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 1500);
+            }
+        }
+
+        // Iniciar animaciones principales
+        function startMainAnimations() {
+            setInterval(createBalloon, 800);
+            setInterval(autoFireworks, 2000);
+
+            for (let i = 0; i < 10; i++) {
+                setTimeout(createBalloon, i * 300);
+            }
+        }
+
+        // Crear globos
+        function createBalloon() {
             const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7', '#ff85a2', '#a29bfe', '#fd79a8'];
             const balloon = document.createElement('div');
             balloon.className = 'balloon';
@@ -362,7 +660,6 @@
             balloon.style.background = colors[Math.floor(Math.random() * colors.length)];
             balloon.style.setProperty('--drift', (Math.random() - 0.5) * 200 + 'px');
             balloon.style.animationDuration = (Math.random() * 4 + 6) + 's';
-            balloon.style.animationDelay = Math.random() * 2 + 's';
             document.body.appendChild(balloon);
 
             setTimeout(() => balloon.remove(), 10000);
@@ -379,7 +676,6 @@
                 particle.style.left = x + 'px';
                 particle.style.top = y + 'px';
                 particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-
                 
                 const angle = (Math.PI * 2 * i) / particleCount;
                 const velocity = 50 + Math.random() * 50;
@@ -401,66 +697,27 @@
             createFirework(x, y);
         }
 
-        // Iniciar animaciones de fondo
-        setInterval(createBalloon, 800);
-        setInterval(autoFireworks, 2000);
-
-        // Crear algunos globos iniciales
-        for (let i = 0; i < 10; i++) {
-            setTimeout(createBalloon, i * 300);
-        }
-
-        // Toggle respuestas
-        function toggleAnswer(num) {
-            const answer = document.getElementById('answer' + num);
-            const allAnswers = document.querySelectorAll('.answer');
-            
-            // Cerrar otras respuestas
-            allAnswers.forEach((ans, index) => {
-                if (index + 1 !== num) {
-                    ans.classList.remove('show');
-                }
-            });
-            
-            // Toggle la respuesta actual
-            answer.classList.toggle('show');
-            
-            // Crear fuegos artificiales en posición aleatoria
-            if (answer.classList.contains('show')) {
-                for (let i = 0; i < 3; i++) {
-                    setTimeout(() => {
-                        const x = Math.random() * window.innerWidth;
-                        const y = Math.random() * 300 + 100;
-                        createFirework(x, y);
-                    }, i * 150);
-                }
-            }
-        }
-
         // Confirmar asistencia
-
         function confirmAttendance() {
             const celebration = document.getElementById('celebration');
             celebration.style.display = 'block';
             
-            // Explosión masiva de fuegos artificiales
-            for (let i = 0; i < 15; i++) {
+            for (let i = 0; i < 20; i++) {
                 setTimeout(() => {
                     const x = Math.random() * window.innerWidth;
                     const y = Math.random() * window.innerHeight * 0.6;
                     createFirework(x, y);
-                }, i * 100);
+                }, i * 80);
             }
             
-            // Crear más globos
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 30; i++) {
                 setTimeout(createBalloon, i * 100);
             }
         }
 
-        // Click en cualquier parte para fuegos artificiales
+        // Click en fondo para fuegos artificiales
         document.addEventListener('click', function(e) {
-            if (!e.target.closest('.container')) {
+            if (!e.target.closest('.container') && !e.target.closest('#countdown-screen')) {
                 createFirework(e.clientX, e.clientY);
             }
         });
