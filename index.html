@@ -359,6 +359,26 @@
             line-height: 1.5;
         }
 
+        .map-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        .map-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
         .final-section {
             text-align: center;
             margin-top: 40px;
@@ -497,7 +517,7 @@
 
             <div class="photo-section">
                 <div class="photo-frame">
-                    <img src="https://i.ibb.co/KzybTJ8/foto-bebe.jpg" alt="Yo de bebé">
+                    <img src="https://i.imgur.com/pLLGlnU.jpeg" alt="Yo de bebé" onerror="this.src='https://via.placeholder.com/250x250/f093fb/ffffff?text=Foto+No+Disponible'">
                     <div class="photo-label">Yo antes 👶🎅</div>
                 </div>
             </div>
@@ -521,6 +541,9 @@
                 <div class="answer-static">
                     <div class="answer-text">Av. Coronel 7717 📍<br>¡No te pierdas que empieza sin ti! 😜<br>(Y sí, habrá comida gratis... ¿necesitas más razones?) 🍕🍔🎂</div>
                 </div>
+                <button class="map-btn" onclick="openMap()">
+                    📍 Ver en el Mapa
+                </button>
             </div>
 
             <div class="final-section">
@@ -697,6 +720,13 @@
             createFirework(x, y);
         }
 
+        // Abrir mapa de Google Maps
+        function openMap() {
+            const address = "Av. Coronel 7717";
+            const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+            window.open(googleMapsUrl, '_blank');
+        }
+
         // Confirmar asistencia
         function confirmAttendance() {
             const celebration = document.getElementById('celebration');
@@ -724,3 +754,4 @@
     </script>
 </body>
 </html>
+
