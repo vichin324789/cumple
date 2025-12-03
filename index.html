@@ -14,7 +14,7 @@
 
         body {
             font-family: 'Comic Sans MS', 'Segoe UI', cursive;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            background: linear-gradient(135deg, #0052D4 0%, #4364F7 50%, #6FB1FC 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -73,14 +73,14 @@
         }
 
         .start-button {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
             color: white;
             border: none;
             padding: 25px 60px;
             font-size: 2em;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 10px 40px rgba(245, 87, 108, 0.5);
+            box-shadow: 0 10px 40px rgba(17, 153, 142, 0.5);
             transition: all 0.3s ease;
             font-weight: bold;
             animation: pulse 1.5s ease-in-out infinite;
@@ -89,7 +89,7 @@
 
         .start-button:hover {
             transform: scale(1.1);
-            box-shadow: 0 15px 50px rgba(245, 87, 108, 0.7);
+            box-shadow: 0 15px 50px rgba(17, 153, 142, 0.7);
         }
 
         @keyframes pulse {
@@ -254,7 +254,7 @@
         }
 
         h1 {
-            color: #7e22ce;
+            color: #0052D4;
             font-size: 2.3em;
             margin: 20px 0;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
@@ -281,7 +281,7 @@
             height: 250px;
             border-radius: 20px;
             overflow: hidden;
-            border: 5px solid #f093fb;
+            border: 5px solid #11998e;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             animation: photoFloat 3s ease-in-out infinite;
             position: relative;
@@ -304,7 +304,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(240, 147, 251, 0.95);
+            background: rgba(17, 153, 142, 0.95);
             color: white;
             padding: 10px;
             font-size: 1em;
@@ -317,7 +317,7 @@
             margin: 25px 0;
             opacity: 0;
             animation: slideIn 0.6s ease-out forwards;
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
             border-radius: 20px;
             padding: 20px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
@@ -340,7 +340,7 @@
 
         .question {
             font-size: 1.5em;
-            color: #7e22ce;
+            color: #0052D4;
             font-weight: bold;
             margin-bottom: 15px;
             text-align: center;
@@ -361,7 +361,7 @@
         }
 
         .map-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #4364F7 0%, #6FB1FC 100%);
             color: white;
             border: none;
             padding: 15px 30px;
@@ -369,7 +369,7 @@
             border-radius: 25px;
             cursor: pointer;
             margin-top: 15px;
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 20px rgba(67, 100, 247, 0.4);
             transition: all 0.3s ease;
             font-weight: bold;
             width: 100%;
@@ -377,7 +377,7 @@
 
         .map-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+            box-shadow: 0 8px 25px rgba(67, 100, 247, 0.6);
         }
 
         .final-section {
@@ -426,7 +426,7 @@
             display: none;
             text-align: center;
             font-size: 2.3em;
-            color: #7e22ce;
+            color: #0052D4;
             margin-top: 20px;
             animation: bounce 0.6s ease-in-out;
             font-weight: bold;
@@ -518,7 +518,7 @@
 
             <div class="photo-section">
                 <div class="photo-frame">
-                    <img src="https://i.imgur.com/PHLjwAE.jpeg" alt="Fiesta" onerror="this.src='https://via.placeholder.com/250x250/f093fb/ffffff?text=Foto+No+Disponible'">
+                    <img src="https://i.imgur.com/PHLjwAE.jpeg" alt="Fiesta" onerror="this.src='https://via.placeholder.com/250x250/11998e/ffffff?text=Fiesta'">
                     <div class="photo-label">Fiesta 🎉</div>
                 </div>
             </div>
@@ -548,9 +548,20 @@
             </div>
 
             <div class="final-section">
-                <button class="confirm-btn" onclick="confirmAttendance()">
-                    ¡Ahí estaré! 🎈
-                </button>
+                <form id="confirmation-form" action="https://formsubmit.co/vicenteartigas64@gmail.com" method="POST">
+                    <!-- Configuración de FormSubmit -->
+                    <input type="hidden" name="_subject" value="🎉 Nueva confirmación de asistencia al cumpleaños!">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="box">
+                    <input type="text" name="_honey" style="display:none">
+                    
+                    <div style="margin-bottom: 20px;">
+                        <input type="text" id="guest-name" name="nombre" placeholder="Tu nombre aquí" required style="width: 100%; padding: 15px; font-size: 1.2em; border: 3px solid #0052D4; border-radius: 15px; text-align: center; margin-bottom: 15px;">
+                    </div>
+                    <button type="submit" class="confirm-btn">
+                        ¡Confirmar Asistencia! 🎈
+                    </button>
+                </form>
                 <div class="celebration" id="celebration">
                     ¡SIUUUUU! 🎉🎊🎁<br>¡Te espero con muchas ansias!<br>¡Nos vemos en mi cumpleaños! 💃🕺🎉
                 </div>
@@ -590,7 +601,7 @@
                 } else {
                     countdownNum.textContent = '¡CUMPLE!';
                     countdownNum.style.fontSize = '7em';
-                    countdownNum.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+                    countdownNum.style.background = 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)';
                     countdownNum.style.webkitBackgroundClip = 'text';
                     countdownNum.style.webkitTextFillColor = 'transparent';
                     countdownNum.style.backgroundClip = 'text';
@@ -728,23 +739,23 @@
             window.open(googleMapsUrl, '_blank');
         }
 
-        // Confirmar asistencia
-        function confirmAttendance() {
-            const celebration = document.getElementById('celebration');
-            celebration.style.display = 'block';
-            
-            for (let i = 0; i < 20; i++) {
-                setTimeout(() => {
-                    const x = Math.random() * window.innerWidth;
-                    const y = Math.random() * window.innerHeight * 0.6;
-                    createFirework(x, y);
-                }, i * 80);
-            }
-            
-            for (let i = 0; i < 30; i++) {
-                setTimeout(createBalloon, i * 100);
-            }
-        }
+        // Mostrar animaciones cuando confirman (el formulario se envía automáticamente)
+        document.getElementById('confirmation-form')?.addEventListener('submit', function(e) {
+            // Mostrar mensaje de celebración antes de enviar
+            setTimeout(() => {
+                for (let i = 0; i < 20; i++) {
+                    setTimeout(() => {
+                        const x = Math.random() * window.innerWidth;
+                        const y = Math.random() * window.innerHeight * 0.6;
+                        createFirework(x, y);
+                    }, i * 80);
+                }
+                
+                for (let i = 0; i < 30; i++) {
+                    setTimeout(createBalloon, i * 100);
+                }
+            }, 100);
+        });
 
         // Click en fondo para fuegos artificiales
         document.addEventListener('click', function(e) {
@@ -755,5 +766,4 @@
     </script>
 </body>
 </html>
-
 
