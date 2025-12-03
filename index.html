@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -516,10 +515,35 @@
                 <p class="funny-text">¡Y TÚ estás invitado a mi cumpleaños! 🥳🎉</p>
             </div>
 
-            <div class="photo-section">
+            <div style="display: flex; gap: 20px; margin: 25px 0; flex-wrap: wrap; justify-content: center; align-items: center;">
+                <!-- Foto -->
                 <div class="photo-frame">
                     <img src="https://i.imgur.com/PHLjwAE.jpeg" alt="Fiesta" onerror="this.src='https://via.placeholder.com/250x250/11998e/ffffff?text=Fiesta'">
                     <div class="photo-label">Fiesta 🎉</div>
+                </div>
+
+                <!-- Contador regresivo -->
+                <div style="background: linear-gradient(135deg, #0052D4 0%, #11998e 100%); border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(0, 82, 212, 0.3); max-width: 280px;">
+                    <h3 style="color: white; text-align: center; font-size: 1.3em; margin-bottom: 15px;">⏰ Faltan:</h3>
+                    <div id="countdown-timer" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div style="background: rgba(255,255,255,0.2); border-radius: 12px; padding: 12px; backdrop-filter: blur(10px);">
+                            <div id="days" style="font-size: 2em; font-weight: bold; color: white; text-align: center;">0</div>
+                            <div style="color: white; text-align: center; font-size: 0.85em;">Días</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.2); border-radius: 12px; padding: 12px; backdrop-filter: blur(10px);">
+                            <div id="hours" style="font-size: 2em; font-weight: bold; color: white; text-align: center;">0</div>
+                            <div style="color: white; text-align: center; font-size: 0.85em;">Horas</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.2); border-radius: 12px; padding: 12px; backdrop-filter: blur(10px);">
+                            <div id="minutes" style="font-size: 2em; font-weight: bold; color: white; text-align: center;">0</div>
+                            <div style="color: white; text-align: center; font-size: 0.85em;">Minutos</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.2); border-radius: 12px; padding: 12px; backdrop-filter: blur(10px);">
+                            <div id="seconds" style="font-size: 2em; font-weight: bold; color: white; text-align: center;">0</div>
+                            <div style="color: white; text-align: center; font-size: 0.85em;">Segundos</div>
+                        </div>
+                    </div>
+                    <p style="color: white; text-align: center; margin-top: 12px; font-size: 0.95em; font-style: italic;">🎂 ¡Hasta el gran día! 🎉</p>
                 </div>
             </div>
 
@@ -738,6 +762,36 @@
             const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
             window.open(googleMapsUrl, '_blank');
         }
+
+        // Contador regresivo hasta el cumpleaños
+        function updateCountdown() {
+            const birthdayDate = new Date('2025-12-11T00:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = birthdayDate - now;
+
+            if (distance < 0) {
+                // Si ya pasó el cumpleaños
+                document.getElementById('days').textContent = '🎉';
+                document.getElementById('hours').textContent = '🎂';
+                document.getElementById('minutes').textContent = '🎈';
+                document.getElementById('seconds').textContent = '🎊';
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
+
+        // Actualizar contador cada segundo
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Llamar inmediatamente
 
         // Mostrar animaciones cuando confirman (el formulario se envía automáticamente)
         document.getElementById('confirmation-form')?.addEventListener('submit', function(e) {
